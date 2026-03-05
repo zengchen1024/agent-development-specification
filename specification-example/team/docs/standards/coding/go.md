@@ -14,6 +14,7 @@
 - 使用 `golangci-lint` 作为 lint 工具
 
 > [团队填写] golangci-lint 配置文件位置及启用的规则集：
+>
 > ```
 > 示例：配置文件位于 team-standards/.golangci.yml，各项目软链接引用
 > ```
@@ -130,6 +131,7 @@ service/
 - 定期运行 `go mod tidy` 清理无用依赖
 
 > [团队填写] 是否使用私有 module proxy：
+>
 > ```
 > GOPROXY=<internal-proxy>,direct
 > GONOSUMCHECK=<internal-domain>

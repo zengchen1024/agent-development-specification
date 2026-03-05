@@ -34,12 +34,14 @@ Commands 是将常用 Prompt 封装为可复用斜杠命令的机制。
 - 子目录形成命名空间：`commands/db/migrate.md` → `/db:migrate`
 
 **适合封装的场景：**
+
 - 需要引用多个规范文档的复合 Review 任务
 - 有固定格式要求的代码生成（迁移脚本、测试文件）
 - 团队统一的工作流步骤（发布前检查、故障排查流程）
 - 需要项目上下文的操作（必须结合 CLAUDE.md 中的约定）
 
 **不适合封装的场景：**
+
 - 简单的一次性问题
 - 不依赖项目上下文的通用操作
 
@@ -55,6 +57,7 @@ Commands 是将常用 Prompt 封装为可复用斜杠命令的机制。
 ```
 
 **关键规则：**
+
 - 第一行 `#` 标题作为命令描述显示在 `/` 菜单中
 - `$ARGUMENTS` 会被替换为用户在命令名后输入的所有文本
 - 命令文件本身就是 Prompt，写法与普通对话指令相同
@@ -69,23 +72,23 @@ Commands 是将常用 Prompt 封装为可复用斜杠命令的机制。
 
 ### 1.4 命令命名约定
 
-| 命名 | 调用方式 | 适用场景 |
-|------|----------|----------|
-| `commands/review.md` | `/review` | 通用 Review |
-| `commands/test.md` | `/test` | 生成测试 |
-| `commands/migrate.md` | `/migrate` | 数据库迁移 |
-| `commands/db/seed.md` | `/db:seed` | 按域分组 |
-| `commands/ci/check.md` | `/ci:check` | CI 检查 |
+| 命名                   | 调用方式    | 适用场景    |
+| ---------------------- | ----------- | ----------- |
+| `commands/review.md`   | `/review`   | 通用 Review |
+| `commands/test.md`     | `/test`     | 生成测试    |
+| `commands/migrate.md`  | `/migrate`  | 数据库迁移  |
+| `commands/db/seed.md`  | `/db:seed`  | 按域分组    |
+| `commands/ci/check.md` | `/ci:check` | CI 检查     |
 
 ### 1.5 内置示例命令
 
 本目录已提供以下示例命令，可直接使用或按项目需求修改：
 
-| 命令 | 文件 | 功能 |
-|------|------|------|
-| `/review` | `commands/review.md` | 对当前改动做全面代码 Review |
-| `/test` | `commands/test.md` | 为指定文件或功能生成单元测试 |
-| `/migrate` | `commands/migrate.md` | 创建数据库迁移文件 |
+| 命令       | 文件                  | 功能                         |
+| ---------- | --------------------- | ---------------------------- |
+| `/review`  | `commands/review.md`  | 对当前改动做全面代码 Review  |
+| `/test`    | `commands/test.md`    | 为指定文件或功能生成单元测试 |
+| `/migrate` | `commands/migrate.md` | 创建数据库迁移文件           |
 
 ---
 
@@ -96,19 +99,20 @@ Commands 是将常用 Prompt 封装为可复用斜杠命令的机制。
 Hooks 是在 Claude Code 执行特定操作时自动触发的 Shell 命令。配置在 `settings.json` 的 `hooks` 字段中。
 
 **核心价值：**
+
 - 自动化质量检查（Claude 改完代码，自动触发 lint）
 - 防护机制（阻止 Claude 执行危险操作）
 - 工作流集成（写入文件后自动通知、记录日志）
 
 ### 2.2 Hook 触发事件
 
-| 事件 | 触发时机 | 典型用途 |
-|------|----------|----------|
-| `PreToolUse` | Claude **调用工具前** | 拦截危险操作、权限检查 |
-| `PostToolUse` | Claude **调用工具后** | 自动 lint、运行测试、记录日志 |
-| `Notification` | Claude 发送通知时 | 消息推送（Slack、桌面通知） |
-| `Stop` | Claude **完成回复后** | 汇总报告、清理临时文件 |
-| `SubagentStop` | 子 Agent 完成后 | 子任务完成回调 |
+| 事件           | 触发时机              | 典型用途                      |
+| -------------- | --------------------- | ----------------------------- |
+| `PreToolUse`   | Claude **调用工具前** | 拦截危险操作、权限检查        |
+| `PostToolUse`  | Claude **调用工具后** | 自动 lint、运行测试、记录日志 |
+| `Notification` | Claude 发送通知时     | 消息推送（Slack、桌面通知）   |
+| `Stop`         | Claude **完成回复后** | 汇总报告、清理临时文件        |
+| `SubagentStop` | 子 Agent 完成后       | 子任务完成回调                |
 
 ### 2.3 Hook 配置格式
 
@@ -135,34 +139,34 @@ Hooks 是在 Claude Code 执行特定操作时自动触发的 Shell 命令。配
 
 **字段说明：**
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
+| 字段      | 类型   | 说明                                                    |
+| --------- | ------ | ------------------------------------------------------- |
 | `matcher` | string | 工具名精确匹配或正则（如 `"Edit\|Write"` 匹配两个工具） |
-| `type` | string | 固定为 `"command"` |
-| `command` | string | 要执行的 Shell 命令，在项目根目录执行 |
-| `timeout` | number | 超时毫秒数，默认 60000（60 秒） |
+| `type`    | string | 固定为 `"command"`                                      |
+| `command` | string | 要执行的 Shell 命令，在项目根目录执行                   |
+| `timeout` | number | 超时毫秒数，默认 60000（60 秒）                         |
 
 ### 2.4 可用工具名（matcher 参考）
 
 Claude Code 内置工具名（用于 matcher）：
 
-| 工具名 | 触发场景 |
-|--------|----------|
-| `Edit` | 编辑现有文件 |
-| `Write` | 创建或覆写文件 |
-| `Bash` | 执行 Shell 命令 |
-| `Read` | 读取文件 |
-| `Glob` | 文件搜索 |
-| `Grep` | 内容搜索 |
+| 工具名   | 触发场景          |
+| -------- | ----------------- |
+| `Edit`   | 编辑现有文件      |
+| `Write`  | 创建或覆写文件    |
+| `Bash`   | 执行 Shell 命令   |
+| `Read`   | 读取文件          |
+| `Glob`   | 文件搜索          |
+| `Grep`   | 内容搜索          |
 | `mcp__*` | 任意 MCP 工具调用 |
 
 ### 2.5 Hook 退出码语义
 
-| 退出码 | 含义 |
-|--------|------|
-| `0` | 成功，继续执行 |
-| `2`（仅 PreToolUse）| **阻止**本次工具调用，Claude 收到阻止原因后重新规划 |
-| 其他非零 | 执行失败，记录错误但继续（不阻止工具） |
+| 退出码               | 含义                                                |
+| -------------------- | --------------------------------------------------- |
+| `0`                  | 成功，继续执行                                      |
+| `2`（仅 PreToolUse） | **阻止**本次工具调用，Claude 收到阻止原因后重新规划 |
+| 其他非零             | 执行失败，记录错误但继续（不阻止工具）              |
 
 > `PreToolUse` 中退出码 `2` 是唯一能阻止 Claude 执行某个操作的方式。
 > stdout 和 stderr 的内容会作为阻止原因反馈给 Claude。
@@ -171,12 +175,12 @@ Claude Code 内置工具名（用于 matcher）：
 
 在 Hook 的 Shell 命令中可读取以下环境变量：
 
-| 变量 | 说明 | 示例值 |
-|------|------|--------|
-| `CLAUDE_TOOL_NAME` | 触发 Hook 的工具名 | `Edit` |
-| `CLAUDE_TOOL_INPUT` | 工具调用参数（JSON） | `{"file_path":"/src/main.go"}` |
-| `CLAUDE_SESSION_ID` | 当前会话 ID | `abc123` |
-| `CLAUDE_PROJECT_DIR` | 项目根目录绝对路径 | `/Users/dev/myproject` |
+| 变量                 | 说明                 | 示例值                         |
+| -------------------- | -------------------- | ------------------------------ |
+| `CLAUDE_TOOL_NAME`   | 触发 Hook 的工具名   | `Edit`                         |
+| `CLAUDE_TOOL_INPUT`  | 工具调用参数（JSON） | `{"file_path":"/src/main.go"}` |
+| `CLAUDE_SESSION_ID`  | 当前会话 ID          | `abc123`                       |
+| `CLAUDE_PROJECT_DIR` | 项目根目录绝对路径   | `/Users/dev/myproject`         |
 
 > 在 Hook 命令中可用 `echo $CLAUDE_TOOL_INPUT | jq '.file_path'` 提取具体字段。
 
@@ -366,12 +370,12 @@ Claude Code 内置工具名（用于 matcher）：
 
 ### 提交策略
 
-| 文件 | 是否提交到仓库 | 原因 |
-|------|---------------|------|
-| `commands/*.md` | **是** | 团队共享命令，统一工作流 |
-| `settings.json`（团队共享 hooks） | **是** | 质量门禁和安全防护应对所有人生效 |
-| `settings.json`（个人偏好 hooks） | **否**，加入 `.gitignore` | 个人偏好不强制他人 |
-| `README.md` | **是** | 文档随代码提交 |
+| 文件                              | 是否提交到仓库            | 原因                             |
+| --------------------------------- | ------------------------- | -------------------------------- |
+| `commands/*.md`                   | **是**                    | 团队共享命令，统一工作流         |
+| `settings.json`（团队共享 hooks） | **是**                    | 质量门禁和安全防护应对所有人生效 |
+| `settings.json`（个人偏好 hooks） | **否**，加入 `.gitignore` | 个人偏好不强制他人               |
+| `README.md`                       | **是**                    | 文档随代码提交                   |
 
 ### 命令迭代流程
 
@@ -385,6 +389,7 @@ Claude Code 内置工具名（用于 matcher）：
 ### 命令质量标准
 
 一个好的 Command 应该：
+
 - **标题清晰**：第一行标题能让人从命令列表中立即理解用途
 - **引用规范**：明确引用相关规范文件，确保 Claude 按团队标准执行
 - **范围明确**：说明命令的边界（做什么、不做什么）

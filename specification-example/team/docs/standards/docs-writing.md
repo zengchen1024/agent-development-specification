@@ -25,9 +25,13 @@
 一句话描述这个项目是做什么的。
 
 ## 快速开始（Quick Start）
+
 ## 项目结构
+
 ## 开发指南
+
 ## 部署
+
 ## 贡献指南（可选，小项目可省略）
 ```
 
@@ -38,10 +42,11 @@
 - 包含环境变量配置说明（`.env.example` 列举所有必填项）
 - 步骤可验证（每一步都有预期输出或验证方式）
 
-```markdown
+````markdown
 ## 快速开始
 
 **前置依赖：**
+
 - Go 1.22+
 - Docker 24+
 - make
@@ -53,8 +58,10 @@
    git clone <repo> && cd <project>
    make deps
    ```
+````
 
 2. 配置环境变量
+
    ```bash
    cp .env.example .env.local
    # 编辑 .env.local，填入必要配置
@@ -65,7 +72,8 @@
    make dev
    # 访问 http://localhost:8080/health 验证
    ```
-```
+
+````
 
 ### 2.3 写作风格
 
@@ -148,7 +156,7 @@
 **正面影响：** ...
 **负面影响 / 权衡：** ...
 **需要跟进的行动：** ...
-```
+````
 
 ### 5.3 ADR 存储位置
 
@@ -172,18 +180,23 @@
 ## [1.2.0] - 2025-06-01
 
 ### Added
+
 - 新增用户批量导入功能
 
 ### Changed
+
 - 优化列表查询性能
 
 ### Fixed
+
 - 修复登录状态不持久的问题
 
 ### Deprecated
+
 - `GET /api/v1/users/list` 将在 v2.0 删除，请使用 `GET /api/v2/users`
 
 ### Breaking Changes
+
 - `createUser` API 参数 `mobile` 重命名为 `phone`
 ```
 
@@ -197,6 +210,7 @@
 ## 7. Runbook / 操作手册
 
 > [团队填写] 运维相关操作文档要求，例如：
+>
 > - 每个服务必须有 `docs/runbook.md`
 > - 必须包含：服务简介、监控看板链接、常见故障处理、数据库操作注意事项、联系人
 > - 格式参见 `docs/templates/runbook-template.md`

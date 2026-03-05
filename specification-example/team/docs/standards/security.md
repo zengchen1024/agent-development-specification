@@ -33,6 +33,7 @@
 ### 2.1 认证
 
 > [团队填写] 定义认证方式，例如：
+>
 > - 使用 JWT 或 Session Cookie（选择其一并统一）
 > - Token 有效期：Access Token 15 分钟，Refresh Token 7 天
 > - JWT 签名算法使用 RS256（非对称），禁止使用 `none` 算法
@@ -63,6 +64,7 @@
 ### 3.2 密钥存储
 
 > [团队填写] 例如：
+>
 > - 生产密钥使用 HashiCorp Vault / AWS Secrets Manager 管理
 > - 本地开发使用 `.env.local` 文件（加入 `.gitignore`）
 > - CI/CD 使用平台提供的 Secret 功能（如 GitHub Secrets）
@@ -85,6 +87,7 @@
 ### 4.2 CSRF（跨站请求伪造）
 
 > [团队填写] 例如：
+>
 > - 使用 CSRF Token（Synchronizer Token 模式）
 > - 或使用 SameSite=Strict Cookie 策略
 > - 纯 API 服务（Token 认证）可豁免
@@ -98,6 +101,7 @@
 ### 4.4 依赖安全
 
 > [团队填写] 例如：
+>
 > - CI 中集成 `trivy` / `npm audit` / `safety`（Python）定期扫描
 > - Critical / High 级别漏洞必须在 7 天内修复
 > - 使用 Dependabot 或 Renovate 自动更新依赖
@@ -133,6 +137,7 @@
 ### 6.1 Code Review 安全检查
 
 每次 PR Review 必须检查：
+
 - [ ] 是否有新的外部输入未经验证
 - [ ] 是否新增了硬编码的密钥或敏感配置
 - [ ] 是否有 SQL 拼接或不安全的反序列化
@@ -142,6 +147,7 @@
 ### 6.2 安全事件响应
 
 > [团队填写] 定义安全事件响应流程，例如：
+>
 > - 发现安全漏洞立即通过加密渠道上报（security@team.com），禁止在公开 Issue 中描述
 > - 高危漏洞响应 SLA：24 小时内确认，72 小时内修复
 > - 安全事件复盘报告模板见 `docs/templates/security-incident-report.md`

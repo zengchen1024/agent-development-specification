@@ -11,12 +11,12 @@
 
 > [填写] 列出所有必须安装的工具和版本，例如：
 
-| 工具 | 版本要求 | 安装说明 |
-|------|----------|----------|
-| Go | >= 1.22 | `brew install go` |
-| Docker | >= 24.0 | [官网下载](https://docker.com) |
-| make | 任意 | macOS 预装 |
-| golangci-lint | >= 1.57 | `brew install golangci-lint` |
+| 工具          | 版本要求 | 安装说明                       |
+| ------------- | -------- | ------------------------------ |
+| Go            | >= 1.22  | `brew install go`              |
+| Docker        | >= 24.0  | [官网下载](https://docker.com) |
+| make          | 任意     | macOS 预装                     |
+| golangci-lint | >= 1.57  | `brew install golangci-lint`   |
 
 ### 1.2 初始化步骤
 
@@ -48,21 +48,21 @@ make dev
 
 > [填写] 所有必填环境变量及说明：
 
-| 变量名 | 说明 | 示例值 |
-|--------|------|--------|
-| `DATABASE_URL` | 数据库连接串 | `postgres://user:pass@localhost:5432/db` |
-| `REDIS_URL` | Redis 连接串 | `redis://localhost:6379` |
-| `JWT_SECRET` | JWT 签名密钥（本地随机字符串即可） | `dev-secret-32chars` |
-| `APP_ENV` | 运行环境 | `development` / `production` |
+| 变量名         | 说明                               | 示例值                                   |
+| -------------- | ---------------------------------- | ---------------------------------------- |
+| `DATABASE_URL` | 数据库连接串                       | `postgres://user:pass@localhost:5432/db` |
+| `REDIS_URL`    | Redis 连接串                       | `redis://localhost:6379`                 |
+| `JWT_SECRET`   | JWT 签名密钥（本地随机字符串即可） | `dev-secret-32chars`                     |
+| `APP_ENV`      | 运行环境                           | `development` / `production`             |
 
 ### 2.2 可选变量
 
 > [填写] 可选环境变量及默认值：
 
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| `APP_PORT` | 服务端口 | `8080` |
-| `LOG_LEVEL` | 日志级别 | `info` |
+| 变量名       | 说明     | 默认值 |
+| ------------ | -------- | ------ |
+| `APP_PORT`   | 服务端口 | `8080` |
+| `LOG_LEVEL`  | 日志级别 | `info` |
 | `LOG_FORMAT` | 日志格式 | `json` |
 
 ---
@@ -123,6 +123,7 @@ make build-prod VERSION=$(git describe --tags)
 ### 4.2 版本信息
 
 > [填写] 版本信息注入方式，例如：
+>
 > - 版本号通过 Git Tag 获取（语义化版本 vX.Y.Z）
 > - 编译时注入：`go build -ldflags "-X main.Version=$(VERSION)"`
 
@@ -147,16 +148,17 @@ make docker-build VERSION=v1.2.3
 
 > [填写] 例如：
 
-| 触发事件 | 执行内容 |
-|----------|----------|
-| PR 提交 | lint + 单元测试 + 覆盖率检查 |
-| merge to main | 全量测试 + 构建 + 推送镜像（dev tag） |
-| 打 Tag（vX.Y.Z）| 构建 + 推送镜像（版本 tag）+ 部署到 staging |
-| 手动触发 | 部署到指定环境 |
+| 触发事件         | 执行内容                                    |
+| ---------------- | ------------------------------------------- |
+| PR 提交          | lint + 单元测试 + 覆盖率检查                |
+| merge to main    | 全量测试 + 构建 + 推送镜像（dev tag）       |
+| 打 Tag（vX.Y.Z） | 构建 + 推送镜像（版本 tag）+ 部署到 staging |
+| 手动触发         | 部署到指定环境                              |
 
 ### 5.2 CI 门禁
 
 > [填写] 必须通过才能合并的检查，例如：
+>
 > - lint 检查通过
 > - 所有测试通过
 > - 代码覆盖率 >= 80%
@@ -165,6 +167,7 @@ make docker-build VERSION=v1.2.3
 ### 5.3 部署流程
 
 > [填写] 部署流程和注意事项，例如：
+>
 > - 部署顺序：staging → 灰度（10%）→ 全量
 > - 数据库迁移在部署前自动执行（Job 形式）
 > - 回滚方式：切换 Kubernetes Deployment 镜像版本
@@ -178,10 +181,10 @@ make docker-build VERSION=v1.2.3
 ```yaml
 # docker-compose.yml 服务说明
 services:
-  postgres:   # 数据库，端口 5432
-  redis:      # 缓存，端口 6379
-  kafka:      # 消息队列，端口 9092（如有）
-  minio:      # 对象存储，端口 9000（如有）
+  postgres: # 数据库，端口 5432
+  redis: # 缓存，端口 6379
+  kafka: # 消息队列，端口 9092（如有）
+  minio: # 对象存储，端口 9000（如有）
 ```
 
 ---
@@ -191,10 +194,12 @@ services:
 > [填写] 常见构建/启动问题及解决方法，例如：
 
 **问题：`make dev` 启动报错 `connection refused (database)`**
+
 - 原因：数据库未启动
 - 解决：`make infra-up`，等待 15 秒后重试
 
 **问题：测试失败，报 `port already in use`**
+
 - 原因：测试使用固定端口，前一次测试未正常退出
 - 解决：`lsof -i :<port> | grep LISTEN`，kill 对应进程
 

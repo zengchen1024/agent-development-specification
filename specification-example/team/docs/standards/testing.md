@@ -17,15 +17,16 @@
      /──────────────────\
 ```
 
-| 类型 | 占比（建议） | 速度 | 关注点 |
-|------|-------------|------|--------|
-| 单元测试 | ~70% | 毫秒级 | 函数/方法的正确性 |
-| 集成测试 | ~20% | 秒级 | 模块间、服务间协作 |
-| E2E 测试 | ~10% | 分钟级 | 完整用户场景 |
+| 类型     | 占比（建议） | 速度   | 关注点             |
+| -------- | ------------ | ------ | ------------------ |
+| 单元测试 | ~70%         | 毫秒级 | 函数/方法的正确性  |
+| 集成测试 | ~20%         | 秒级   | 模块间、服务间协作 |
+| E2E 测试 | ~10%         | 分钟级 | 完整用户场景       |
 
 ### 1.2 覆盖率要求
 
 > [团队填写] 例如：
+>
 > - 新增代码行覆盖率不低于 80%（CI 门禁）
 > - 核心业务逻辑（支付、权限）不低于 90%
 > - 覆盖率仅作参考，不应为追求覆盖率写无价值的测试
@@ -87,6 +88,7 @@ test("parseDate_withInvalidFormat_throwsValidationError")
 ### 3.2 测试数据库
 
 > [团队填写] 例如：
+>
 > - 使用 Docker 启动测试数据库实例（通过 testcontainers 管理）
 > - 每个测试套件使用独立的 database / schema，避免干扰
 > - 测试完成后自动清理数据
@@ -94,6 +96,7 @@ test("parseDate_withInvalidFormat_throwsValidationError")
 ### 3.3 合同测试
 
 > [团队填写] 如果有微服务间 API 合同测试需求，例如：
+>
 > - 使用 Pact 进行消费者驱动的合同测试
 > - Provider 测试在 CI 中验证，确保合同未被破坏
 
@@ -109,6 +112,7 @@ test("parseDate_withInvalidFormat_throwsValidationError")
 ### 4.2 测试环境
 
 > [团队填写] 例如：
+>
 > - E2E 测试跑在独立的 staging 环境
 > - 测试账号和数据由 fixture 脚本预置
 > - 使用 Playwright 驱动浏览器
@@ -136,6 +140,7 @@ test("parseDate_withInvalidFormat_throwsValidationError")
 - 已知 flaky test 使用 quarantine 标记，并限时修复
 
 > [团队填写] quarantine 标记方式：
+>
 > ```
 > // @quarantine: JIRA-1234, 预期修复日期 2025-XX-XX
 > ```

@@ -16,13 +16,13 @@
 
 ### 1.2 命名约定
 
-| 类型 | 约定 | 示例 |
-|------|------|------|
-| 变量 / 函数 | snake_case | `user_name`, `get_user()` |
-| 类 | PascalCase | `UserService` |
-| 常量 | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| 私有 | 单下划线前缀 | `_internal_helper()` |
-| 模块 | snake_case | `user_service.py` |
+| 类型        | 约定             | 示例                      |
+| ----------- | ---------------- | ------------------------- |
+| 变量 / 函数 | snake_case       | `user_name`, `get_user()` |
+| 类          | PascalCase       | `UserService`             |
+| 常量        | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT`         |
+| 私有        | 单下划线前缀     | `_internal_helper()`      |
+| 模块        | snake_case       | `user_service.py`         |
 
 - 避免使用双下划线（dunder）前缀，除非明确实现 Python 魔法方法
 
@@ -139,6 +139,7 @@ dev = ["pytest", "ruff", "mypy"]
 ```
 
 > [团队填写] Python 版本要求：
+>
 > ```
 > requires-python = ">=3.11"
 > ```

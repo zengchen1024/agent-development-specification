@@ -12,20 +12,21 @@
 - 配置文件由 team-standards 统一维护，各项目引用：
 
 > [团队填写] 例如：
+>
 > ```
 > extends: ["@team/eslint-config"]
 > ```
 
 ### 1.2 命名约定
 
-| 类型 | 约定 | 示例 |
-|------|------|------|
-| 变量 / 函数 | camelCase | `userName`, `getUser()` |
-| 类 / 接口 / 类型 | PascalCase | `UserService`, `UserDTO` |
-| 常量 | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| 枚举 | PascalCase（成员也 PascalCase）| `enum Status { Active, Inactive }` |
-| 文件 | kebab-case | `user-service.ts` |
-| React 组件文件 | PascalCase | `UserCard.tsx` |
+| 类型             | 约定                            | 示例                               |
+| ---------------- | ------------------------------- | ---------------------------------- |
+| 变量 / 函数      | camelCase                       | `userName`, `getUser()`            |
+| 类 / 接口 / 类型 | PascalCase                      | `UserService`, `UserDTO`           |
+| 常量             | UPPER_SNAKE_CASE                | `MAX_RETRY_COUNT`                  |
+| 枚举             | PascalCase（成员也 PascalCase） | `enum Status { Active, Inactive }` |
+| 文件             | kebab-case                      | `user-service.ts`                  |
+| React 组件文件   | PascalCase                      | `UserCard.tsx`                     |
 
 ---
 
@@ -133,6 +134,7 @@ const orders = await getOrders();
 > [团队填写] 区分 Node.js 后端和 React/Next.js 前端：
 
 **Node.js 后端**
+
 ```
 src/
 ├── domain/           # 实体和接口
@@ -144,6 +146,7 @@ src/
 ```
 
 **React / Next.js 前端**
+
 ```
 src/
 ├── app/              # Next.js App Router 页面
@@ -159,6 +162,7 @@ src/
 ## 7. 依赖管理
 
 > [团队填写] 包管理器选型，例如：
+>
 > - 统一使用 `pnpm`（Monorepo 友好，更严格的依赖隔离）
 > - `package.json` 中锁定 engines 版本：`"node": ">=20"`
 
