@@ -7,7 +7,7 @@
           {
             "type": "command",
             "comment": "阻止 Claude 直接 push 到 main/master，必须走 PR 流程",
-            "command": "jq -r '.command' | grep -qE 'git push.*(origin )?(main|master)$' && echo '禁止直接 push 到 main/master，请创建 PR' && exit 2 || exit 0"
+            "command": "jq -r '.tool_input.command' | grep -qE 'git push.*(origin )?(main|master)' && echo '禁止直接 push 到 main/master，请创建 PR' && exit 2 || exit 0"
           }
         ]
       }
