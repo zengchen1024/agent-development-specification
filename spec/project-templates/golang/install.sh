@@ -308,8 +308,14 @@ TARGET_CLAUDE="${TARGET}/CLAUDE.md"
 
 append_team_standards() {
     if grep -qF "$DEV_RULES_BEGIN" "$TARGET_CLAUDE" 2>/dev/null; then
-        success "CLAUDE.md 中已包含团队规范内容，无需重复追加"
-        return
+        # 已有区块：删除旧内容，随后重新写入（支持规范更新）
+        local tmp
+        tmp="$(mktemp)"
+        awk -v begin="$DEV_RULES_BEGIN" -v end="$DEV_RULES_END" \
+            '$0 == begin, $0 == end {next} {print}' \
+            "$TARGET_CLAUDE" > "$tmp" \
+            && mv "$tmp" "$TARGET_CLAUDE" \
+            || { rm -f "$tmp"; error "更新 CLAUDE.md 失败"; }
     fi
 
     {
@@ -324,16 +330,15 @@ append_team_standards() {
         echo "$DEV_RULES_END"
     } >> "$TARGET_CLAUDE"
 
-    success "追加团队规范内容到 CLAUDE.md"
+    success "写入团队规范内容到 CLAUDE.md"
 }
 
 if [[ -f "$TARGET_CLAUDE" ]]; then
     info "CLAUDE.md 已存在，追加团队规范内容"
-    append_team_standards
 else
-    cp "$CLAUDE_MD_SRC" "$TARGET_CLAUDE"
-    success "创建 CLAUDE.md"
+    info "CLAUDE.md 不存在，创建新文件"
 fi
+append_team_standards
 
 # ──────────────────────────── 完成 ────────────────────────────
 echo ""
